@@ -1,0 +1,11 @@
+import earthTexture from './earth.jpg'
+import jupiterTexture from './jupiter.jpg'
+import marsTexture from './mars.jpg'
+import mercuryTexture  from './mercury.jpg'
+import neptuneTexture  from './neptune.jpg'
+import saturnTexture  from './saturn.jpg'
+import sunTexture from './sun.jpg'
+import uranusTexture   from './uranus.jpg'
+import venusTexture    from './venus.jpg'
+import venusSurfaceTexture from './venusSurface.jpg'
+export{earthTexture,jupiterTexture,marsTexture,mercuryTexture,neptuneTexture,saturnTexture,sunTexture,uranusTexture,venusSurfaceTexture,venusTexture,}
