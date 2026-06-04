@@ -1,9 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-export default{
+export default {
   content: ["./src/**/*.{js,jsx}"],
   mode: "jit",
   theme: {
     extend: {
+      keyframes: {
+        loader: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(250%)" },
+        },
+      },
+      animation: {
+        loader: "loader 2s ease-in-out infinite",
+      },
       colors: {
         primary: "#050816",
         primary2: "#333399",
@@ -25,13 +34,12 @@ export default{
         "space-pattern": "url('/src/assets/space2.jpg')",
         "planet-pattern": "url('/src/assets/company/planet2.png')",
         "planet1-pattern": "url('/src/assets/company/planet1.png')",
-        "space": "url('/src/assets/4k.jpg')",
-        "space2": "url('/src/assets/4k2.jpg')",
-
+        space: "url('/src/assets/4k.jpg')",
+        space2: "url('/src/assets/4k2.jpg')",
       },
       fontFamily: {
-        gabriola: ['Gabriola', 'sans-serif'],
-        cormorant: ['Cormorant Garamond', 'serif'],
+        gabriola: ["Gabriola", "sans-serif"],
+        cormorant: ["Cormorant Garamond", "serif"],
       },
     },
   },

@@ -3,7 +3,6 @@ import purple from "../assets/planets/purple.png";
 import planet from "../assets/planets/jupiter.png";
 import blue from "../assets/planets/uranus.png";
 import sun from "../assets/planets/sun.png";
-
 import {
   facebook,
   instagram,
@@ -29,18 +28,13 @@ export const navLinks = [
     id: "#about",
     title: "About",
   },
-
-  {
-    id: "/View3D",
-    title: "Product",
-  },
   {
     id: "#contact",
     title: "Contact",
   },
   {
-    id: "/register",
-    title: "Register",
+    id: "/collection",
+    title: "collection",
   },
   {
     id: "/order",
@@ -94,21 +88,24 @@ const footer = {
 
 const uniqueSellingPoints = [
   {
-    title: "PlanetInspired",
+    title: "Planet Inspired",
     description:
       "Each chocolate is carefully crafted to resemble a planet in the solar system, making your chocolates both delicious and visually stunning.",
     icon: blue,
+    color: "#2C3E90",
   },
   {
-    title: "Handcrafted",
+    title: "Hand crafted",
     description:
       "Made from high-quality, ethically sourced ingredients, every chocolate offers a gourmet experience with a variety of rich, unique flavors inspired by the characteristics of different planets.",
     icon: purple,
+    color: "#7D3C98",
   },
   {
     title: "Interactive Space Journey",
     description:
       "Customers can explore the solar system through chocolate, with each planet representing a different taste adventure. It's more than just a treat—it's an interstellar experience!",
+    color: "#FDB813",
     icon: sun,
   },
   {
@@ -116,41 +113,17 @@ const uniqueSellingPoints = [
     description:
       "The store is committed to sustainability by using biodegradable, eco-friendly packaging that reflects the company's respect for the planet.",
     icon: planet,
+    color: "#D9A066",
   },
   {
     title: "3D Designs",
     description:
       "Our chocolates feature innovative 3D designs that match the unique appearances of each planet, providing a visually captivating and delightful treat.",
     icon: mars,
+    color: "#C1440E",
   },
 ];
-const comments = [
-  {
-    name: "Sara",
-    comment: "It is really the best experience I ever had!",
-    photo: instagram,
-  },
-  {
-    name: "John",
-    comment: "I absolutely loved the design and service!",
-    photo: instagram,
-  },
-  {
-    name: "Emily",
-    comment: "Amazing quality, I will definitely recommend it!",
-    photo: instagram,
-  },
-  {
-    name: "Michael",
-    comment: "A truly unique and enjoyable experience.",
-    photo: instagram,
-  },
-  {
-    name: "Olivia",
-    comment: "Hands down, the best I’ve tried in a long time!",
-    photo: instagram,
-  },
-];
+
 // const solarSystem = {
 //   sun: {
 //     planetPosition: [0, 0, 1],
@@ -347,4 +320,5 @@ const solarSystem = {
     texture: earthTexture,
   },
 };
-export { footer, uniqueSellingPoints, comments, solarSystem };
+
+export { footer, uniqueSellingPoints, solarSystem };
