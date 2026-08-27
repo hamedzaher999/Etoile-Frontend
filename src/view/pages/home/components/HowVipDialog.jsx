@@ -47,8 +47,6 @@ const HowVipDialog = ({ closeCallback }) => {
         </div>
 
         <div className="mt-8 flex justify-between gap-6">
-          <button className="app-button flex-1">Start Mission</button>
-
           <button
             onClick={() => {
               closeCallback?.();

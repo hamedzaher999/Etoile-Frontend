@@ -42,7 +42,11 @@ const ReviewSection = () => {
           setAction("");
         }}
       >
-        <SendReviewDialog />
+        <SendReviewDialog
+          closeCallback={() => {
+            setAction("");
+          }}
+        />
       </AppDialog>
       {/* report dialog */}
 
@@ -52,7 +56,11 @@ const ReviewSection = () => {
           setAction("");
         }}
       >
-        <SendReportDialog />
+        <SendReportDialog
+          closeCallback={() => {
+            setAction("");
+          }}
+        />
       </AppDialog>
 
       {/*  register dialog */}
@@ -62,7 +70,11 @@ const ReviewSection = () => {
           setAction("");
         }}
       >
-        <RegisterAlert />
+        <RegisterAlert
+          closeCallback={() => {
+            setAction("");
+          }}
+        />
       </AppDialog>
 
       <div className="relative z-10">

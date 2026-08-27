@@ -13,27 +13,37 @@ const Planet = () => {
   lightPosition[0] += 1;
   lightPosition[1] += 0;
   lightPosition[2] += 1;
+
   const clonedScene = useMemo(() => {
     return gltf.scene.clone(true);
   }, [gltf.scene]);
 
   const setField = usePlanetsStore((s) => s.setField);
+  const animation = useAnimations(gltf.animations, clonedScene);
+
   useEffect(() => {
     setField("isPageLoaded", true);
   }, []);
-  const actions = useAnimations(gltf.animations, clonedScene);
   useEffect(() => {
     if (isOpen) {
-      if (!actions) return;
-      for (let i = 0; i < actions.names.length; i++) {
-        actions.actions[actions.names[i]]
-          .reset()
-          .setLoop(THREE.LoopOnce)
-          .play().clampWhenFinished = true;
+      if (!animation) return;
+      for (let i = 0; i < animation.names.length; i++) {
+        const action = animation.actions[animation.names[i]];
+        action.enabled = true;
+        action.paused = false;
+        action.setLoop(THREE.LoopOnce);
+        action.clampWhenFinished = true;
+        action.timeScale = 1;
+        action.play();
       }
     } else {
-      for (let i = 0; i < actions.names.length; i++) {
-        actions.actions[actions.names[i]].stop();
+      for (let i = 0; i < animation.names.length; i++) {
+        const action = animation.actions[animation.names[i]];
+        action.paused = false;
+        action.enabled = true;
+        action.setLoop(THREE.LoopOnce);
+        action.timeScale = -1;
+        action.play();
       }
     }
   }, [isOpen]);

@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ArrowBigDown } from "lucide-react";
 import Interstellar from "../../../customs/Interstellar";
 import { useHomeStore } from "../../../../store/home.store";
+import { Link } from "react-router-dom";
 const Hero = () => {
   const isPageLoaded = useHomeStore((s) => s.isPageLoaded);
 
@@ -69,19 +70,19 @@ const Hero = () => {
           <div className="overflow-hidden">
             <h1
               id="hero-title"
-              className="app-text-gradient text-center text-[72px] font-black leading-none tracking-tight opacity-0 md:text-[110px] lg:text-[130px] xl:text-left xl:text-[170px]"
+              className="app-text-gradient text-center text-[72px] font-black leading-none tracking-tight opacity-0 md:text-[110px] lg:text-left lg:text-[130px] xl:text-[170px]"
             >
               Étoile
             </h1>
           </div>
           <div
             id="hero-line"
-            className="mx-auto mb-6 mt-3 h-[2px] w-0 rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-transparent opacity-0 xl:mx-0"
+            className="mx-auto mb-6 mt-3 h-[2px] w-0 rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-transparent opacity-0 lg:mx-0"
           />
-          <div className="flex flex-row items-center justify-center overflow-hidden xl:justify-start">
+          <div className="flex flex-row items-center justify-center overflow-hidden lg:justify-start">
             <p
               id="hero-subtitle"
-              className="max-w-[700px] text-center text-[12px] font-light leading-[1.9] text-white/85 opacity-0 md:text-[16px] xl:text-left xl:text-[20px]"
+              className="max-w-[700px] text-center text-[12px] font-light leading-[1.9] text-white/85 opacity-0 md:text-[16px] lg:text-left xl:text-[20px]"
             >
               Are you ready to explore the galaxy through flavor?
               <br />
@@ -93,11 +94,11 @@ const Hero = () => {
         </div>
         {/* bottom bouncing button  */}
         <div className="pointer-events-auto z-[1000] mb-5 flex justify-center xl:justify-start">
-          <button className="app-button">
+          <a href={"#about"} className="app-button">
             <span className="relative z-10">
               <ArrowBigDown className="mt-2 animate-bounce" />
             </span>
-          </button>
+          </a>
         </div>
         <div className="absolute left-[-200px] top-[-200px] h-[500px] w-[500px] rounded-full bg-purple-500/10 blur-[120px]" />
       </div>

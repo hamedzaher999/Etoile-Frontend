@@ -1,7 +1,5 @@
-import {
-  planets,
-  usePlanetsStore,
-} from "../../../store/planet.store";
+import { planets } from "../../../constant/planets";
+import { usePlanetsStore } from "../../../store/planet.store";
 import { useState } from "react";
 
 const ControlPanel = () => {

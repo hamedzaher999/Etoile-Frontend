@@ -3,19 +3,9 @@ import { orderFormValidation } from "../api/validations/order.validation";
 import z from "zod";
 import toast from "react-hot-toast";
 
-const packages = {
-  CLASSIC: {
-    isOpen: false,
-  },
-  VIP: {
-    isOpen: false,
-  },
-};
-
 const useOrderStore = create((set, get) => ({
   // UI
   isPageLoaded: false,
-  CurrentPackage: { ...packages["VIP"] },
   // form field
   name: "",
   phone: "",
@@ -26,18 +16,6 @@ const useOrderStore = create((set, get) => ({
   paymentMethod: {},
   errors: {},
 
-  // model controllers
-  start: true,
-  model: "big",
-  isOpen: false,
-  isSmallOpen: false,
-  isBigOpen: false,
-  prevModel: "big",
-  prevIsOpen: false,
-  //
-  setState: (state) => {
-    set({ ...state });
-  },
   getOrderBody: () => {
     if (
       get().validate() &&
@@ -120,6 +98,26 @@ const useOrderStore = create((set, get) => ({
 
     set({ errors: formattedErrors });
     return false;
+  },
+}));
+
+export const usePackageStore = create((set, get) => ({
+  start: false,
+  model: "VIP",
+  isVipOpen: false,
+  isClassicOpen: false,
+  prevModel: "VIP",
+  toggleOpen: () => {
+    const filed =
+      get().model === "VIP" ? "isVipOpen" : "isClassicOpen";
+    set({ [filed]: !get()[filed], start: true });
+  },
+  togglePackage: () => {
+    set({
+      prevModel: get().model,
+      model: get().model === "VIP" ? "CLASSIC" : "VIP",
+      start: false,
+    });
   },
 }));
 

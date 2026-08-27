@@ -1,92 +1,47 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import DraggableGroup from "./DraggableGroup";
-import handelPackageAnimationFunc from "../../functoins/handelPackageAnimation";
-import handelSmallPackageAnimationFunc from "../../functoins/handelSmallPackageAnimationFunc";
+import useAnimation from "../../hooks/useAnimation";
 import useOrderStore from "../../store/order.store";
 const PackageModel = ({ children }) => {
-  const {
-    start,
-    model,
-    isOpen,
-    isSmallOpen,
-    isBigOpen,
-    prevModel,
-    prevIsOpen,
-  } = useOrderStore();
-  const packageState = {
-    start: start,
-    model: model,
-    isOpen: isOpen,
-    isSmallOpen: isSmallOpen,
-    isBigOpen: isBigOpen,
-    prevModel: prevModel,
-    prevIsOpen: prevIsOpen,
-  };
-  const { scene: studio } = useGLTF(
-    "../../../public/studio/sudio.gltf",
-  );
+  const studioRef = useRef();
+  const { scene: studio } = useGLTF("/room/room.glb");
   const { scene: bigPackage, animations } = useGLTF(
-    "../../../public/package/choclate.gltf",
+    "/package/VipPackage.glb",
   );
   const { scene: smallPackage, animations: smallAnimations } =
-    useGLTF("../../../public/smallPackage/smallPackage.gltf");
+    useGLTF("/smallPackage/ClassicPackage.glb");
   useEffect(() => {
     useOrderStore.getState().setIsPageLoaded(true);
   }, []);
 
-  const bigActions = useAnimations(animations, bigPackage);
-  const smallActions = useAnimations(smallAnimations, smallPackage);
+  const VIPanimation = useAnimations(animations, bigPackage);
+  const CLASSICanimation = useAnimations(
+    smallAnimations,
+    smallPackage,
+  );
 
-  const ref = useRef();
-  const studioRef = useRef();
-  // useEffect(() => {
-  //   bigPackage.children[1].castShadow = false;
-  //   bigPackage.children[11].children[0].children[0].castShadow = true;
-  //   studio.children.forEach((childe) => (childe.castShadow = false));
-  //   //
-  //   smallPackage.children[1].castShadow = true;
-  //   smallPackage.children[2].children[0].children[0].castShadow = true;
-  //   smallPackage.children[2].children[0].children[1].castShadow = true;
-  //   smallPackage.children[2].children[0].children[2].castShadow = true;
-  //   //
-  //   console.log(bigPackage.children);
-  //   studio.children[0].material.color.setRGB(0.1, 0.1, 0.1);
-  //   studio.children[0].material.roughness = 1;
-  //   studio.children[0].receiveShadow = true;
-  //   studio.children[0].castShadow = false;
-  // }, []);
-  useEffect(() => {
-    handelSmallPackageAnimationFunc({
-      packageState,
-      bigActions,
-      smallActions,
-    });
-  }, [isSmallOpen, start]);
-
-  useEffect(() => {
-    handelPackageAnimationFunc({
-      packageState,
-      bigActions,
-      smallActions,
-    });
-  }, [isBigOpen, start]);
+  useAnimation(VIPanimation, CLASSICanimation);
 
   return (
     <>
       <group rotation={[Math.PI / 2, -Math.PI / 2, Math.PI / 2]}>
         {children}
         <DraggableGroup position={[0, 0, 15]}>
-          <primitive ref={ref} object={bigPackage} scale={1.2} />
+          <primitive
+            castShadow={true}
+            object={bigPackage}
+            scale={1.2}
+          />
         </DraggableGroup>
         <DraggableGroup position={[0, 0, -10]}>
-          <primitive object={smallPackage} />
+          <primitive castShadow={true} object={smallPackage} />
         </DraggableGroup>
-
         <primitive
           ref={studioRef}
           object={studio}
-          scale={[7, 1, 3]}
+          position={[0, -10, 0]}
+          scale={[6, 6, 6]}
         />
       </group>
     </>

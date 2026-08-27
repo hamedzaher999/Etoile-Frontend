@@ -26,3 +26,9 @@ dist-ssr
 #
 todo.md
 .vscode
+n.js
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log

@@ -1,6 +1,7 @@
 import { useGetPaymentMethods } from "../../../../api/services/home_service/footer";
 
 import dottedEarth from "../../../../assets/dotedEarth.png";
+import check from "../../../../assets/placeholder/check.png";
 
 import { footer } from "../../../../constant";
 
@@ -78,7 +79,7 @@ const Footer = () => {
                     <div className="flex h-[44px] w-[44px] items-center justify-center rounded-full border border-purple-400/20 bg-black/30">
                       <img
                         src={footer.socialMedia[element].icon}
-                        alt=""
+                        alt="payment"
                         className="aspect-square h-5 transition-all duration-300 group-hover:scale-90 group-hover:rounded-md"
                       />
                     </div>
@@ -143,7 +144,10 @@ const Footer = () => {
               >
                 <div className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-white/10 bg-white p-3">
                   <img
-                    src={element.img_url}
+                    onError={(e) => {
+                      e.target.src = check;
+                    }}
+                    src={element.img_url || ""}
                     alt={element.name}
                     className="h-full w-full object-contain"
                   />

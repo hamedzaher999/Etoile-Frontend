@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Menu,
-  Package2,
   Rocket,
   User2,
   LogOut,
@@ -12,25 +11,17 @@ import {
 import { useUserStore } from "../../../store/user.store";
 import { navLinks } from "../../../constant";
 import { storeLogo } from "../../../assets";
-import { useLogout } from "../../../api/services/auth_service/logout";
 import CurrentOrder from "./components/CurrentOrder";
+import AppDialog from "../../customs/AppDialog";
+import LogoutConfirmation from "../auth/components/LogoutConfirmation";
 const Navbar = () => {
+  const [logout, setLogout] = useState(false);
   const [toggle, setToggle] = useState(false);
-  const { name, is_vip, clear } = useUserStore();
-  const location = useLocation();
-  const isRegisterPage = location.pathname === "/register";
-  const { mutateAsync: logout, isPending: isLoggingOut } =
-    useLogout();
-  const handleLogout = async (allSessions = false) => {
-    if (isLoggingOut) return;
-    const response = await logout({
-      allSessions,
-    });
-    if (response.success) {
-      clear();
-      setToggle(false);
-    }
-  };
+  const name = useUserStore((s) => s.name);
+  const is_vip = useUserStore((s) => s.is_vip);
+  const isRegisterPage = document.location.pathname === "/register";
+
+  const hideSectionsButton = document.location.pathname !== "/";
   //
   return (
     <div className="pointer-events-auto">
@@ -40,6 +31,13 @@ const Navbar = () => {
 
         <div className="mx-auto flex h-[65px] max-w-[1600px] items-center justify-between px-5 lg:px-10">
           {/* ================= LOGO ======================= */}
+
+          <AppDialog
+            closeCallback={() => setLogout(false)}
+            show={logout}
+          >
+            <LogoutConfirmation onSuccess={() => setLogout(false)} />
+          </AppDialog>
 
           <Link
             to="/"
@@ -63,9 +61,18 @@ const Navbar = () => {
               <div className="hidden items-center gap-3 lg:flex">
                 {navLinks.map((link) => (
                   <a
+                    style={{
+                      display:
+                        link.id === document.location.pathname ||
+                        (hideSectionsButton &&
+                          (link.title === "Contact" ||
+                            link.title === "About"))
+                          ? "none"
+                          : "",
+                    }}
                     key={link.title}
                     href={link.id}
-                    className="group relative overflow-hidden rounded-full border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-white/70 backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/20 hover:text-white"
+                    className="group relative cursor-pointer overflow-hidden rounded-full border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-white/70 backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/20 hover:text-white"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-400/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
@@ -120,7 +127,7 @@ const Navbar = () => {
                     style={{
                       letterSpacing: 2.5,
                     }}
-                    onClick={() => handleLogout(true)}
+                    onClick={() => setLogout(true)}
                     className="app-button error hidden items-center gap-2 text-sm lg:flex"
                   >
                     <LogOut color="red" size={16} />
@@ -159,6 +166,15 @@ const Navbar = () => {
               <div className="flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <a
+                    style={{
+                      display:
+                        link.id === document.location.pathname ||
+                        (hideSectionsButton &&
+                          (link.title === "Contact" ||
+                            link.title === "About"))
+                          ? "none"
+                          : "",
+                    }}
                     key={link.title}
                     href={link.id}
                     onClick={() => setToggle(false)}
@@ -181,7 +197,7 @@ const Navbar = () => {
                   </Link>
                 ) : (
                   <button
-                    onClick={() => handleLogout(true)}
+                    onClick={() => setLogout(true)}
                     className="app-button error flex w-full flex-row items-center justify-center gap-5"
                   >
                     <LogOut color="red" size={18} />

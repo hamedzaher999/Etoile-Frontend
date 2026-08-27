@@ -178,9 +178,9 @@ const InfoSection = () => {
 
       {/* dialogs */}
       <AppDialog
-        hidden={action === ""}
+        show={action !== ""}
+        closeCallback={() => setAction("")}
         onScroll={false}
-        onClick={false}
       >
         {action === "HOW_VIP" && (
           <HowVipDialog closeCallback={() => setAction("")} />
