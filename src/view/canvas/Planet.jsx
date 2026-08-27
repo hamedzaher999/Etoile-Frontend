@@ -6,7 +6,8 @@ import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
 import Lights from "./Lights";
 const Planet = () => {
-  const { planet, isOpen } = usePlanetsStore();
+  const isOpen = usePlanetsStore((s) => s.isOpen);
+  const planet = usePlanetsStore((s) => s.planet);
   const gltf = useGLTF(planet?.model);
   const groupRef = useRef();
   const lightPosition = [...planet?.position];

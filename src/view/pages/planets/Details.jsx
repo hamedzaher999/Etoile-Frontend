@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { usePlanetsStore } from "../../../store/planet.store";
 import Interstellar from "../../customs/Interstellar";
-
+import { Orbit } from "lucide-react";
 const Details = () => {
   const planet = usePlanetsStore((state) => state.planet);
   const isPlanetLoaded = usePlanetsStore(
@@ -113,6 +113,14 @@ const Details = () => {
 
   return (
     <>
+      <div
+        style={{
+          opacity: isPlanetLoaded ? 0 : 1,
+        }}
+        className="absolute inset-0 z-[99999] flex h-full w-full items-center justify-center backdrop-blur-sm transition-all duration-200"
+      >
+        <Orbit className="animate-spin" />
+      </div>
       <Interstellar />
       {/* header */}
       <div id="details-header" className="relative z-10">

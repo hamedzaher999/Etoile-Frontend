@@ -17,7 +17,7 @@ const PlanetsPage = () => {
     };
   }, []);
   return (
-    <section className="pointer-events-none relative z-[1000] h-full w-screen overflow-hidden p-5 md:p-8">
+    <section className="pointer-events-none relative z-[1000] h-screen w-screen overflow-hidden p-5 md:p-8">
       {!isPageLoaded && <LoadingScreen />}
       <PlanetsNav />
       <ControlPanel />
