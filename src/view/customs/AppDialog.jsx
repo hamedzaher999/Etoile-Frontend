@@ -21,17 +21,19 @@ const AppDialog = ({
     createPortal(
       <div>
         <div
-          style={{
-            zIndex,
+          style={{ zIndex }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeCallback?.();
           }}
-          className={`${show ? "" : "pointer-events-none opacity-0"} fixed left-1/2 top-1/2 flex max-w-[calc(100%-32px)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-3xl border-[2px] border-gray-500 backdrop-blur-xl transition-all duration-500`}
+          className={`${
+            show ? "" : "pointer-events-none opacity-0"
+          } fixed inset-0 flex items-center justify-center p-4 transition-opacity duration-500`}
         >
-          {children}
+          <div className="flex max-h-[85vh] max-w-full flex-col overflow-y-auto overflow-x-hidden rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl">
+            {children}
+          </div>
         </div>
         <div
-          onClick={() => {
-            closeCallback?.();
-          }}
           style={{
             zIndex: zIndex - 1,
           }}

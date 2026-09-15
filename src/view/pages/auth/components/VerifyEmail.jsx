@@ -8,6 +8,7 @@ import { useRegisterStore } from "../../../../store/register.store";
 import { useNavigate } from "react-router-dom";
 import ResendCode from "./ResendCode";
 import toast from "react-hot-toast";
+import { UNKNOWN_ERROR } from "../../../../constant/errors";
 
 const VerifyEmail = ({ resetRegisterInfo }) => {
   const navigate = useNavigate();
@@ -24,21 +25,19 @@ const VerifyEmail = ({ resetRegisterInfo }) => {
 
   const handleVerify = async () => {
     if (validateOtp()) {
-      const response = await verify({
-        email: email,
-        otp: otp,
-      });
-      if (response.success) {
-        navigate("/", { replace: true });
-      } else {
+      try {
+        const response = await verify({
+          email: email,
+          otp: otp,
+        });
+        if (response.success) {
+          navigate("/", { replace: true });
+        }
+      } catch (e) {
         toast.dismissAll();
-        toast.error(
-          response?.message ||
-            "some thing went wrong, please try again.",
-        );
+        toast.error(e?.response?.data?.message || UNKNOWN_ERROR);
       }
     }
-    return;
   };
 
   return (

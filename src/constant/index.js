@@ -37,7 +37,7 @@ export const navLinks = [
 
 const footer = {
   contactInfo: {
-    email: "info@chocolatestore.com",
+    email: "info@etoile.com",
     phone: "+123456789",
     address: "123 Chocolate Ave, Cocoa City",
   },
@@ -76,7 +76,7 @@ const footer = {
     weekdays: "Mon - Fri: 9 AM - 6 PM",
     weekends: "Sat - Sun: 10 AM - 4 PM",
   },
-  copyright: "© 2024 Chocolate Store. All rights reserved.",
+  copyright: "© 2024 Étoile. All rights reserved.",
 };
 
 const uniqueSellingPoints = [

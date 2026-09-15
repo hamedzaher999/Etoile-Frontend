@@ -13,13 +13,14 @@ export const register = async (body) => {
 
 export const verityEmail = async (body) => {
   try {
-    const res = await api.post("/auth/verify_email", body);
+    const res = await api.post("/auth/verify_otp", body);
     return res.data;
   } catch (err) {
     console.log("API ERROR:", err.response?.data || err.message);
     throw err;
   }
 };
+
 export const resendOtp = async (body) => {
   try {
     const res = await api.post("/auth/resend_otp", body);

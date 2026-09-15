@@ -1,7 +1,9 @@
+import { string } from "zod";
 import { create } from "zustand";
 
 export const useUserStore = create((set, get) => ({
   name: null,
+  type: null,
   username: null,
   email: null,
   avatar_url: null,
@@ -13,6 +15,7 @@ export const useUserStore = create((set, get) => ({
       email: data?.email || null,
       is_vip: data?.is_vip || false,
       avatar_url: data?.avatar_url || null,
+      type: data?.type || null,
     });
   },
   clear: () => {
@@ -22,6 +25,7 @@ export const useUserStore = create((set, get) => ({
       email: null,
       avatar_url: null,
       is_vip: false,
+      type: null,
     });
   },
 }));

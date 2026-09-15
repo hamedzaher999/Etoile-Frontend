@@ -10,7 +10,16 @@ import App from "./view/pages/App";
 import { BrowserRouter } from "react-router-dom";
 import { toastStyle } from "./constant/toastStyle";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      gcTime: 15 * 60 * 1000,
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>

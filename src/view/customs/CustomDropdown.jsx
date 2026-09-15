@@ -49,7 +49,7 @@ const CustomDropdown = ({
       {open && (
         <div
           onMouseDown={(e) => e.preventDefault()}
-          className="scrollable-content app-bg absolute z-10 mt-1 max-h-[150px] w-full overflow-y-auto rounded-xl border"
+          className="scrollable-content absolute z-10 mt-1 max-h-[150px] w-full overflow-y-auto rounded-xl border border-white/10 bg-[#0a0a12] shadow-[0_10px_40px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
         >
           {filteredOptions.length ? (
             filteredOptions.map((opt) => (

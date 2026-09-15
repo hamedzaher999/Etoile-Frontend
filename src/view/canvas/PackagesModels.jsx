@@ -5,7 +5,6 @@ import { memo, useRef } from "react";
 import PackageLights from "./PackageLights";
 import { usePackageStore } from "../../store/order.store";
 export const PackagesModels = () => {
-  console.log("PackageCanvas rendered");
   const current = useRef(new THREE.Vector3(0, 0, 0));
   const lightsRef = useRef();
   const model = usePackageStore((s) => s.model);

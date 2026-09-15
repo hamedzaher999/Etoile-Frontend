@@ -96,7 +96,7 @@ const OrderPage = () => {
           setOrder(false);
         }}
       >
-        <OrderDialog />
+        <OrderDialog closeCallback={() => setOrder(false)} />
       </AppDialog>
 
       {true && (

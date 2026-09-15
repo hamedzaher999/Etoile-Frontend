@@ -59,26 +59,33 @@ const Navbar = () => {
           {!isRegisterPage && (
             <>
               <div className="hidden items-center gap-3 lg:flex">
-                {navLinks.map((link) => (
-                  <a
-                    style={{
-                      display:
-                        link.id === document.location.pathname ||
-                        (hideSectionsButton &&
-                          (link.title === "Contact" ||
-                            link.title === "About"))
-                          ? "none"
-                          : "",
-                    }}
-                    key={link.title}
-                    href={link.id}
-                    className="group relative cursor-pointer overflow-hidden rounded-full border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-white/70 backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/20 hover:text-white"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-400/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                {navLinks.map((link) => {
+                  const isHash = link.id.startsWith("#");
+                  const NavTag = isHash ? "a" : Link;
+                  const navProps = isHash
+                    ? { href: link.id }
+                    : { to: link.id };
+                  return (
+                    <NavTag
+                      style={{
+                        display:
+                          link.id === document.location.pathname ||
+                          (hideSectionsButton &&
+                            (link.title === "Contact" ||
+                              link.title === "About"))
+                            ? "none"
+                            : "",
+                      }}
+                      key={link.title}
+                      {...navProps}
+                      className="group relative cursor-pointer overflow-hidden rounded-full border border-white/10 bg-black/40 px-4 py-2.5 text-sm text-white/70 backdrop-blur-xl transition-all duration-300 hover:border-cyan-300/20 hover:text-white"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-400/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-                    <span>{link.title}</span>
-                  </a>
-                ))}
+                      <span>{link.title}</span>
+                    </NavTag>
+                  );
+                })}
               </div>
 
               <div className="flex items-center gap-3">
@@ -164,25 +171,32 @@ const Navbar = () => {
 
             <div className="relative z-10">
               <div className="flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <a
-                    style={{
-                      display:
-                        link.id === document.location.pathname ||
-                        (hideSectionsButton &&
-                          (link.title === "Contact" ||
-                            link.title === "About"))
-                          ? "none"
-                          : "",
-                    }}
-                    key={link.title}
-                    href={link.id}
-                    onClick={() => setToggle(false)}
-                    className="app-button"
-                  >
-                    {link.title}
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  const isHash = link.id.startsWith("#");
+                  const NavTag = isHash ? "a" : Link;
+                  const navProps = isHash
+                    ? { href: link.id }
+                    : { to: link.id };
+                  return (
+                    <NavTag
+                      style={{
+                        display:
+                          link.id === document.location.pathname ||
+                          (hideSectionsButton &&
+                            (link.title === "Contact" ||
+                              link.title === "About"))
+                            ? "none"
+                            : "",
+                      }}
+                      key={link.title}
+                      {...navProps}
+                      onClick={() => setToggle(false)}
+                      className="app-button"
+                    >
+                      {link.title}
+                    </NavTag>
+                  );
+                })}
               </div>
 
               <div className="mt-6">

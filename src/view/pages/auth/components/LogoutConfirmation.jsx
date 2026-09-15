@@ -1,23 +1,17 @@
-import { CheckSquare2, Orbit, Square } from "lucide-react";
-import { useState } from "react";
+import { Orbit } from "lucide-react";
 import { useLogout } from "../../../../api/services/auth_service/logout";
 import { useUserStore } from "../../../../store/user.store";
 import toast from "react-hot-toast";
 import { UNKNOWN_ERROR } from "../../../../constant/errors";
-
 const LogoutConfirmation = ({ onSuccess = () => {} }) => {
-  const [allSessions, setAllSessions] = useState(false);
-  const CheckBox = allSessions ? CheckSquare2 : Square;
   const clear = useUserStore((s) => s.clear);
-
   const { mutateAsync: logout, isPending: isLoggingOut } =
     useLogout();
+
   const handleLogout = async () => {
     if (isLoggingOut) return;
     try {
-      const response = await logout({
-        allSessions: allSessions,
-      });
+      const response = await logout({});
       if (response.success) {
         clear();
         onSuccess?.();
@@ -29,24 +23,17 @@ const LogoutConfirmation = ({ onSuccess = () => {} }) => {
       toast.error(e?.response?.data?.message || UNKNOWN_ERROR);
     }
   };
+
   return (
-    <div className="px-6 py-3">
-      <p className="min-w-[280px]">
-        Are you sur you want to logout this session ?
+    <div className="min-w-[280px] px-6 py-5">
+      <p className="text-sm text-white/80">
+        Are you sure you want to logout?
       </p>
-      <div className="mt-3 flex flex-row items-center gap-3 text-gray-400">
-        <CheckBox
-          color={allSessions ? "red" : "#9ca3af"}
-          size={20}
-          className="cursor-pointer"
-          onClick={() => setAllSessions((s) => !s)}
-        />
-        all session
-      </div>
+
       <button
         disabled={isLoggingOut}
         onClick={handleLogout}
-        className="app-button-action error mt-7 flex w-full items-center justify-center"
+        className="app-button-action error mt-6 flex w-full items-center justify-center disabled:cursor-not-allowed disabled:opacity-55"
       >
         {isLoggingOut ? (
           <Orbit size={18} className="animate-spin" />

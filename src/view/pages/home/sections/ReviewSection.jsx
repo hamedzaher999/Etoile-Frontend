@@ -100,7 +100,6 @@ const ReviewSection = () => {
         {/* reviews */}
         <div className="relative z-10 mt-20 flex flex-wrap justify-center gap-6 px-4">
           {result?.data?.data.map((r, i) => {
-            console.log(r);
             return (
               <div key={i}>
                 <Review
@@ -108,7 +107,7 @@ const ReviewSection = () => {
                   review={r.comment}
                   img={r.account_avatar || undefined}
                   // TODO check the name of these tow fields
-                  is_vip={r.is_vip_client}
+                  is_vip={false}
                   rate={r.rating}
                 />
               </div>

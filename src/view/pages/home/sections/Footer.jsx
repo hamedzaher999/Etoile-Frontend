@@ -1,4 +1,7 @@
-import { useGetPaymentMethods } from "../../../../api/services/home_service/footer";
+import {
+  useGetFooterStructure,
+  useGetPaymentMethods,
+} from "../../../../api/services/home_service/footer";
 
 import dottedEarth from "../../../../assets/dotedEarth.png";
 import check from "../../../../assets/placeholder/check.png";
@@ -9,7 +12,7 @@ import { ArrowUpRight } from "lucide-react";
 
 const Footer = () => {
   const { data: paymentMethods } = useGetPaymentMethods();
-
+  const { data: footerStructure } = useGetFooterStructure();
   return (
     <footer
       id="contact"
@@ -98,34 +101,37 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* links */}
-          <div className="min-w-[260px] flex-1">
-            <p className="mb-4 text-[11px] uppercase tracking-[0.45em] text-purple-300">
-              Navigation
-            </p>
+          {/* links (dynamic, admin-managed) */}
+          {footerStructure?.data?.data?.map((group) => (
+            <div key={group.key} className="min-w-[260px] flex-1">
+              <p className="mb-4 text-[11px] uppercase tracking-[0.45em] text-purple-300">
+                Navigation
+              </p>
 
-            <h2 className="app-text-gradient text-3xl font-black tracking-tight">
-              Quick Links
-            </h2>
+              <h2 className="app-text-gradient text-3xl font-black tracking-tight">
+                {group.key}
+              </h2>
 
-            <div className="mt-8 flex flex-col gap-3">
-              {footer.quickLinks.map((element) => (
-                <div
-                  key={element.name}
-                  className="group flex items-center justify-between rounded-[22px] border border-white/10 bg-white/[0.03] px-5 py-4 backdrop-blur-xl transition-all duration-300 hover:translate-x-1 hover:border-cyan-300/20"
-                >
-                  <p className="text-sm text-white/70 transition-all duration-300 group-hover:text-white">
-                    {element.name}
-                  </p>
+              <div className="mt-8 flex flex-col gap-3">
+                {group.items.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.reference}
+                    className="group flex items-center justify-between rounded-[22px] border border-white/10 bg-white/[0.03] px-5 py-4 backdrop-blur-xl transition-all duration-300 hover:translate-x-1 hover:border-cyan-300/20"
+                  >
+                    <p className="text-sm text-white/70 transition-all duration-300 group-hover:text-white">
+                      {item.name}
+                    </p>
 
-                  <ArrowUpRight
-                    size={18}
-                    className="text-white/40 transition-all duration-300 group-hover:text-cyan-300"
-                  />
-                </div>
-              ))}
+                    <ArrowUpRight
+                      size={18}
+                      className="text-white/40 transition-all duration-300 group-hover:text-cyan-300"
+                    />
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* payment methods */}

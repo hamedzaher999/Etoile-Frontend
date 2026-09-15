@@ -1,7 +1,6 @@
 import { memo } from "react";
 
 const PackageLights = () => {
-  console.log("PackageLights rendered ");
   return (
     <>
       <ambientLight intensity={0.8} castShadow={true} />

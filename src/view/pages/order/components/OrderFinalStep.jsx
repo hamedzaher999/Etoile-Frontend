@@ -1,7 +1,7 @@
 import { useOrder } from "../../../../api/services/order/order";
 import useOrderStore from "../../../../store/order.store";
 import toast from "react-hot-toast";
-import { Orbit } from "lucide-react";
+import { CheckCircle2, Orbit } from "lucide-react";
 import { UNKNOWN_ERROR } from "../../../../constant/errors";
 const OrderFinalStep = () => {
   const { selectedPackage, getOrderBody } = useOrderStore();
@@ -11,13 +11,10 @@ const OrderFinalStep = () => {
     isError,
     isSuccess,
   } = useOrder();
-  console.log(isOrdering);
-  console.log(isError);
 
   const handleOrder = async () => {
     try {
       const body = getOrderBody();
-      console.log(body);
       if (!body) return;
       const result = await order(body);
       if (result.data.success) {
@@ -32,7 +29,7 @@ const OrderFinalStep = () => {
     }
   };
   return (
-    <div className="flex h-full flex-col justify-between">
+    <div className="flex min-h-full flex-col justify-between">
       {selectedPackage && (
         <div className="rounded-2xl border border-purple-500/20 bg-purple-500/5 p-4 backdrop-blur-md">
           <p className="mb-2 text-xs tracking-[0.3em] text-purple-300">
@@ -59,38 +56,26 @@ const OrderFinalStep = () => {
         </div>
       )}
       {isSuccess && (
-        <div className="mx-auto mt-8 flex max-w-md flex-col items-center rounded-lg border border-emerald-200 bg-emerald-50 p-6 text-center shadow-sm">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 13l4 4L19 8"
-              />
-            </svg>
+        <div className="app-card mx-auto mt-8 flex max-w-md flex-col items-center border-emerald-400/20 bg-emerald-500/[0.06] p-6 text-center shadow-[0_0_40px_rgba(52,211,153,0.12)]">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/10 text-emerald-300">
+            <CheckCircle2 size={22} />
           </div>
-          <p className="mb-2 text-lg font-semibold text-emerald-800">
+          <p className="mb-2 text-lg font-semibold text-white">
             Your order has been submitted successfully!
           </p>
-          <p className="mb-4 text-sm text-emerald-600">
+          <p className="mb-4 text-sm text-white/60">
             We are currently reviewing your request. You will receive
             an email update shortly.
           </p>
-          <div className="inline-flex items-center rounded-full bg-emerald-200 px-3 py-1 text-xs font-medium text-emerald-800">
+          <div className="inline-flex items-center rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-200">
             Status: Pending
           </div>
         </div>
       )}
       <div>
         {!isSuccess && (
-          <p className="mt-4 rounded-lg border border-gray-100 bg-gray-50 p-3 text-xs leading-relaxed text-gray-500">
-            <span className="mb-1 block font-semibold text-gray-800">
+          <p className="mt-4 rounded-lg border border-purple-500/20 bg-purple-500/5 p-3 text-xs leading-relaxed text-white/60 backdrop-blur-md">
+            <span className="mb-1 block font-semibold text-white/90">
               Please Note:
             </span>
             Your order will be reviewed for approval. Once accepted,
@@ -99,7 +84,7 @@ const OrderFinalStep = () => {
           </p>
         )}
         <button
-          // disabled={isSuccess}
+          disabled={isSuccess || isOrdering}
           onClick={() => {
             handleOrder();
           }}

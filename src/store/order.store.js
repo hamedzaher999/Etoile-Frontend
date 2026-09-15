@@ -7,11 +7,9 @@ const useOrderStore = create((set, get) => ({
   // UI
   isPageLoaded: false,
   // form field
-  name: "",
-  phone: "",
+  contact: "",
   location: "",
-  country_id: "",
-  city_id: "",
+  branch_id: "",
   selectedPackage: {},
   paymentMethod: {},
   errors: {},
@@ -25,11 +23,9 @@ const useOrderStore = create((set, get) => ({
       return {
         payment_method_id: get().paymentMethod?.id,
         package_id: get().selectedPackage?.id,
-        country_id: get().country_id,
-        city_id: get().city_id,
+        branch_id: get().branch_id,
         delivery_location: get().location,
-        receiver_phone: get().phone,
-        receiver_name: get().name,
+        contact: get().contact || undefined,
       };
     } else {
       toast.dismissAll();
@@ -58,11 +54,9 @@ const useOrderStore = create((set, get) => ({
 
   resetForm: () => {
     set({
-      name: "",
-      phone: "",
+      contact: "",
       location: "",
-      country_id: "",
-      city_id: "",
+      branch_id: "",
       selectedPackage: {},
       paymentMethod: {},
       errors: {},
@@ -70,13 +64,11 @@ const useOrderStore = create((set, get) => ({
   },
 
   validate: () => {
-    const { name, phone, location, country_id, city_id } = get();
+    const { contact, location, branch_id } = get();
     const currentData = {
-      name,
-      phone,
+      contact,
       location,
-      country_id,
-      city_id,
+      branch_id,
     };
 
     const result = orderFormValidation.safeParse(currentData);

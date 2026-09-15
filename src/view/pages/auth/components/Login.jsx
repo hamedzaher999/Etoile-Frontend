@@ -24,7 +24,12 @@ const Login = () => {
         if (response?.success) {
           toast.success("login successfully");
           setInfo(response?.data);
-          navigate("/", { replace: true });
+          navigate(
+            response?.data.type === "admin"
+              ? "/admin/dashboard"
+              : "/",
+            { replace: true },
+          );
         } else {
           toast.error(response?.message || UNKNOWN_ERROR);
         }

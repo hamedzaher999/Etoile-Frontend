@@ -24,6 +24,7 @@ import {
 } from "../../../../api/services/account_service/orders.api";
 import { UNKNOWN_ERROR } from "../../../../constant/errors";
 import { useNavigate } from "react-router-dom";
+import PayOrderDialog from "./PayOrderDialog";
 
 const CurrentOrder = () => {
   const navigate = useNavigate();
@@ -34,14 +35,14 @@ const CurrentOrder = () => {
     useCancelOrder();
   const [open, setOpen] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState(false);
-
+  const [payDialog, setPayDialog] = useState(false);
   const getOrder = async () => {
     try {
       if (isLoading) return;
       await refetch();
     } catch (error) {
       toast.dismissAll();
-      toast.error(error?.response?.message || UNKNOWN_ERROR);
+      toast.error(error?.response?.data?.message || UNKNOWN_ERROR);
     }
   };
 
@@ -49,7 +50,6 @@ const CurrentOrder = () => {
     if (!order?.id) return;
     try {
       const result = await cancel(order.id);
-      console.log(result);
 
       toast.dismissAll();
       if (result?.data?.success) {
@@ -58,7 +58,7 @@ const CurrentOrder = () => {
       }
     } catch (error) {
       toast.dismissAll();
-      toast.error(error?.response?.data.message || UNKNOWN_ERROR);
+      toast.error(error?.response?.data?.message || UNKNOWN_ERROR);
     }
   };
 
@@ -66,9 +66,7 @@ const CurrentOrder = () => {
     () => ({
       pending: {
         icon: Clock3,
-
         label: "Pending",
-
         className: `
           border-yellow-300/20
           bg-yellow-400/10
@@ -76,11 +74,29 @@ const CurrentOrder = () => {
         `,
       },
 
+      accepted: {
+        icon: CheckCircle2,
+        label: "Accepted",
+        className: `
+          border-blue-300/20
+          bg-blue-400/10
+          text-blue-200
+        `,
+      },
+
+      payed: {
+        icon: CreditCard,
+        label: "Payed",
+        className: `
+          border-purple-300/20
+          bg-purple-400/10
+          text-purple-200
+        `,
+      },
+
       delivered: {
         icon: CheckCircle2,
-
         label: "Delivered",
-
         className: `
           border-cyan-300/20
           bg-cyan-400/10
@@ -88,11 +104,9 @@ const CurrentOrder = () => {
         `,
       },
 
-      cancelled: {
+      canceled: {
         icon: XCircle,
-
         label: "Cancelled",
-
         className: `
           border-red-300/20
           bg-red-400/10
@@ -155,7 +169,23 @@ const CurrentOrder = () => {
           </div>
         </div>
       </AppDialog>
-      <AppDialog show={open} closeCallback={() => setOpen(false)}>
+      <AppDialog
+        zIndex={1700}
+        show={payDialog}
+        onScroll={false}
+        closeCallback={() => setPayDialog(false)}
+      >
+        <PayOrderDialog
+          order={order}
+          closeCallback={() => setPayDialog(false)}
+          onPaid={getOrder}
+        />
+      </AppDialog>
+      <AppDialog
+        show={open}
+        onScroll={false}
+        closeCallback={() => setOpen(false)}
+      >
         <div className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-white/10 bg-[#05050c]/95 p-5 backdrop-blur-3xl">
           <div className="absolute left-1/2 top-[-180px] h-[320px] w-[320px] -translate-x-1/2 rounded-full bg-purple-500/10 blur-[140px]" />
 
@@ -208,7 +238,11 @@ const CurrentOrder = () => {
                     </h2>
 
                     <p className="mt-1 text-xs text-white/40">
-                      # {order?.order_number.padStart(6, "0")}
+                      #{" "}
+                      {(order?.reference || order?.id)
+                        ?.toString()
+                        .slice(0, 8)
+                        .toUpperCase()}
                     </p>
                   </div>
 
@@ -230,17 +264,19 @@ const CurrentOrder = () => {
                 <div className="space-y-4">
                   <div className="flex flex-col items-start justify-between gap-2">
                     <div className="flex items-center gap-2 text-white/50">
-                      <User2 color="cyan" size={16} />
+                      <Package2 color="cyan" size={16} />
                       <span className="overflow-hidden text-nowrap text-white">
-                        {order?.receiver_name}
+                        {order?.branch_name}
                       </span>
                     </div>
-                    <div className="flex justify-center gap-2 text-white/50">
-                      <Phone color="cyan" size={16} />
-                      <span className="text-white">
-                        {order?.receiver_phone}
-                      </span>
-                    </div>
+                    {order?.contact && (
+                      <div className="flex justify-center gap-2 text-white/50">
+                        <Phone color="cyan" size={16} />
+                        <span className="text-white">
+                          {order?.contact}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -276,13 +312,25 @@ const CurrentOrder = () => {
                   <RefreshCcw size={15} />
                   Refresh
                 </button>
-                <button
-                  onClick={() => setConfirmDialog(true)}
-                  className="app-button-action error flex w-full flex-row items-center justify-center gap-2 text-sm"
-                >
-                  <PackageX color="red" size={15} />
-                  cancel
-                </button>
+                {order?.status === "accepted" &&
+                  order?.payment_method_is_online && (
+                    <button
+                      onClick={() => setPayDialog(true)}
+                      className="app-button-action confirm flex w-full flex-row items-center justify-center gap-2 text-sm"
+                    >
+                      <CreditCard size={15} />
+                      Pay Now
+                    </button>
+                  )}
+                {["pending", "accepted"].includes(order?.status) && (
+                  <button
+                    onClick={() => setConfirmDialog(true)}
+                    className="app-button-action error flex w-full flex-row items-center justify-center gap-2 text-sm"
+                  >
+                    <PackageX color="red" size={15} />
+                    cancel
+                  </button>
+                )}
               </div>
             </>
           )}

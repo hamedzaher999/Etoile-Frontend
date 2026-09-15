@@ -15,7 +15,7 @@ export const useOrder = () => {
 //------------------------------------------
 
 const myOrder = async () => {
-  const response = await api.get("/order");
+  const response = await api.get("/account/orders");
   return response;
 };
 

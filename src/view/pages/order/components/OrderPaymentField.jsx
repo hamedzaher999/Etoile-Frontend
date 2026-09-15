@@ -27,7 +27,7 @@ const OrderPaymentField = ({ setStep }) => {
   const [selectedMethod, setSelectedMethod] = useState(null);
   const { is_vip } = useUserStore();
   return (
-    <div className="flex h-full w-full flex-col justify-between gap-4">
+    <div className="flex min-h-full w-full flex-col justify-between gap-4">
       {isLoadingPackage ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5">
           <Orbit className="animate-spin text-purple-400" />

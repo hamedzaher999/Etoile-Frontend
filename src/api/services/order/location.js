@@ -15,7 +15,6 @@ export const useGetCountries = () => {
 
 const getCountryCities = async ({ queryKey }) => {
   const [, countryId] = queryKey;
-  console.log(countryId);
   const result = await api.get(
     `/order/countries/${countryId}/cities`,
   );

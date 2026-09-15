@@ -5,6 +5,7 @@ import { ArrowLeftCircle, Orbit } from "lucide-react";
 import VerifyEmail from "./VerifyEmail";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { UNKNOWN_ERROR } from "../../../../constant/errors";
 const Register = () => {
   const navigate = useNavigate();
   const {
@@ -18,7 +19,7 @@ const Register = () => {
     username,
     email,
     password,
-    confirmPassword,
+    confirmedPassword,
     setField,
     error,
     validateRegisterInput,
@@ -26,20 +27,20 @@ const Register = () => {
   const handleRegister = async () => {
     if (isRegistering) return;
     if (validateRegisterInput()) {
-      const response = await register({
-        name,
-        email,
-        username,
-        password,
-      });
-      if (response.success) {
+      try {
+        const response = await register({
+          name,
+          email,
+          username,
+          password,
+        });
+        if (response.success) {
+          toast.dismissAll();
+          toast.success("your account has been created.");
+        }
+      } catch (e) {
         toast.dismissAll();
-        toast.success("your account has been created.");
-      } else {
-        toast.error(
-          response?.message ||
-            "some thing went wrong pleas try again.",
-        );
+        toast.error(e?.response?.data?.message || UNKNOWN_ERROR);
       }
     }
   };
@@ -90,7 +91,7 @@ const Register = () => {
           />
           <CustomInput
             redNote={error.confirmedPassword}
-            value={confirmPassword}
+            value={confirmedPassword}
             label={"confirm Password"}
             onChangeFun={(e) => {
               setField("confirmedPassword", e);

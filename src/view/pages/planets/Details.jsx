@@ -117,7 +117,7 @@ const Details = () => {
         style={{
           opacity: isPlanetLoaded ? 0 : 1,
         }}
-        className="absolute inset-0 z-[99999] flex h-full w-full items-center justify-center backdrop-blur-sm transition-all duration-200"
+        className="pointer-events-none absolute inset-0 z-[99999] flex h-full w-full items-center justify-center backdrop-blur-sm transition-all duration-200"
       >
         <Orbit className="animate-spin" />
       </div>

@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 export const registerSchema = z
   .object({
     name: z
@@ -28,29 +27,15 @@ export const registerSchema = z
     error: "passwords do not match",
   });
 
-export const loginSchema = z
-  .object({
-    email: z
-      .email("Invalid email format.")
-      .optional()
-      .or(z.literal("")),
-    username: z
-      .string()
-      .min(3, "username is too short")
-      .optional()
-      .or(z.literal("")),
-    password: z
-      .string()
-      .min(8, "password must be at least 8 characters."),
-  })
-  .refine((data) => data.email || data.username, {
-    message: "Either email or username is required.",
-    path: ["email"],
-  });
+export const loginSchema = z.object({
+  email: z.email("Invalid email format."),
+  password: z
+    .string()
+    .min(8, "password must be at least 8 characters."),
+});
 
 export const verifyEmailSchema = z.object({
-  account_id: z.uuid(),
-
+  email: z.email("Invalid email format."),
   otp: z.string().length(6),
 });
 

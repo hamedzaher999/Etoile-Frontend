@@ -32,3 +32,6 @@ n.js
 .firebase/
 firebase-debug.log
 firebase-debug.*.log
+ui.mjs
+ui.txt
+.env

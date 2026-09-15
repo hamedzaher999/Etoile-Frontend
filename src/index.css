@@ -221,7 +221,13 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
+.purple-text-gradient {
+  background: #a855f7;
+  background: -webkit-linear-gradient(to top, #7c3aed, #c084fc);
+  background: linear-gradient(to top, #7c3aed, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 @keyframes pulse {
   0% {
     opacity: 0.2;
